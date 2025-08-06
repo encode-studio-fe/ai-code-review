@@ -143,18 +143,15 @@ export class CodeReviewer {
         }
       }
 
-      // 如果是多文件，批量发送所有文件的审查结果
-      if (results.length > 1) {
-        consola.info('开始发送审查结果通知...')
-        await this.notificationManager.sendBatchReviewNotifications(results, this.platform)
+      consola.info('开始发送审查结果通知...')
+      await this.notificationManager.sendBatchReviewNotifications(results, this.platform)
 
-        // 发送总结通知
-        if (summary) {
-          await this.notificationManager.sendSummaryNotification(
-            summary,
-            this.platform,
-          )
-        }
+      // 发送总结通知
+      if (summary) {
+        await this.notificationManager.sendSummaryNotification(
+          summary,
+          this.platform,
+        )
       }
 
       consola.success('代码审查完成')
