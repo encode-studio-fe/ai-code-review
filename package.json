@@ -21,7 +21,10 @@
   ],
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.mjs",
@@ -30,7 +33,6 @@
   "bin": {
     "encode-code-review": "dist/cli.mjs",
     "encode-cr": "dist/cli.mjs"
-
   },
   "files": [
     "bin",
