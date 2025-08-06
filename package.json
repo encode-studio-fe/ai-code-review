@@ -84,7 +84,7 @@
     "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "eslint --fix --cache",
-    "*.json": "eslint --fix --cache"
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "eslint --fix",
+    "*.json": "eslint --fix"
   }
 }
