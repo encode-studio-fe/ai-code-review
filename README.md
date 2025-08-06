@@ -104,3 +104,9 @@ encode-code-review local --path ./test_review_file/index.js
    - `AI_REVIEWER_PROMPT_SYSTEM`: (可选) 自定义系统提示词
    - `AI_REVIEWER_PROMPT_REVIEW`: (可选) 自定义审查提示词
    - `AI_REVIEWER_PROMPT_SUMMARY`: (可选) 自定义总结提示词
+
+注意：
+
+Actions -> General -> Workflow permissions
+
+设置为 Read and  write permissions
