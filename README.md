@@ -1,16 +1,6 @@
 # Encode Code Review
 
-[![npm version][npm-version-src]][npm-version-href]
-
-_description_
-
-## Sponsors
-
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
-  </a>
-</p>
+印客学院--基于本地和github代码进行code review
 
 ## License
 
@@ -30,3 +20,16 @@ _description_
 - **平台服务**: 提供与不同代码托管平台的集成
 - **AI提供者**: 封装不同AI服务的调用逻辑
 - **代码审查核心**: 处理代码差异分析和审查逻辑
+
+## 安装
+
+```bash
+# 全局安装
+npm install -g encode-code-review
+
+# 或使用pnpm
+pnpm add -g encode-code-review
+
+# 或使用yarn
+yarn global add encode-code-review
+```

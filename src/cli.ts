@@ -4,7 +4,7 @@ import { version } from '../package.json'
 import { initCli } from './cli/commands'
 
 // 设置进程标题
-process.title = 'encode-ai-review'
+process.title = 'encode-code-review'
 
 // 输出版本信息到调试日志
 

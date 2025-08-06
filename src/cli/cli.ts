@@ -4,7 +4,7 @@ import { version } from '../../package.json'
 import { loadConfig } from '../config/config'
 import { CodeReviewer } from '../core/reviewer'
 
-const cli = cac('encode-ai-review')
+const cli = cac('encode-code-review')
 
 /**
  * 设置CLI版本和帮助信息
