@@ -99,10 +99,8 @@ encode-code-review local --path ./test_review_file/index.js
 1. 在仓库的Settings > Secrets and variables > Actions中设置以下secrets：
 
    - `AI_REVIEWER_OPENAI_KEY`: (必需) OpenAI/OpenRouter API密钥
-   - `AI_REVIEWER_MODEL`: (可选) 使用的AI模型, 默认: `gpt-3.5-turbo`
-   - `AI_REVIEWER_BASE_URL`: (可选) API基础URL, 默认: `https://api.openai.com/v1`
+   - `AI_REVIEWER_MODEL`: (可选) 使用的AI模型, 默认: `deepseek/deepseek-chat-v3-0324:free`
+   - `AI_REVIEWER_BASE_URL`: (可选) API基础URL, 默认: `https://openrouter.ai/api/v1`
    - `AI_REVIEWER_PROMPT_SYSTEM`: (可选) 自定义系统提示词
    - `AI_REVIEWER_PROMPT_REVIEW`: (可选) 自定义审查提示词
    - `AI_REVIEWER_PROMPT_SUMMARY`: (可选) 自定义总结提示词
-   - `WECOM_ENABLED`: (可选) 企业微信通知开关, 值: `true`/`false`
-   - `WECOM_WEBHOOK`: (可选) 企业微信Webhook地址
