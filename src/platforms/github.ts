@@ -161,7 +161,7 @@ export class GitHubPlatform implements Platform {
               comments: [
                 {
                   path: filePath,
-                  position: line,
+                  position: Number(line),
                   body: comment,
                 },
               ],

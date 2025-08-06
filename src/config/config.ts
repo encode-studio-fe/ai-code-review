@@ -21,6 +21,7 @@ export interface AiReviewerConfig {
     token?: string
     url?: string
   }
+  notifications: {}
   review: {
     ignoreFiles?: string[]
     ignorePaths?: string[]
@@ -45,6 +46,7 @@ const defaultConfig: AiReviewerConfig = {
   platform: {
     type: 'local',
   },
+  notifications: {},
   review: {
     ignoreFiles: [
       '*.lock',
@@ -95,6 +97,7 @@ function loadEnvConfig(): Partial<AiReviewerConfig> {
       token: process.env.AI_REVIEWER_GITHUB_TOKEN,
       url: process.env.AI_REVIEWER_PLATFORM_URL,
     },
+    notifications: {},
     review: {
       ignoreFiles: process.env.AI_REVIEWER_IGNORE_FILES
         ? process.env.AI_REVIEWER_IGNORE_FILES.split(',')
@@ -183,6 +186,9 @@ function mergeConfig(
   if (fileConfig.platform) {
     merged.platform = { ...merged.platform, ...fileConfig.platform }
   }
+  if (fileConfig.notifications) {
+    merged.notifications = { ...merged.notifications }
+  }
   if (fileConfig.review) {
     merged.review = { ...merged.review }
     if (fileConfig.review.ignoreFiles) {
@@ -225,6 +231,11 @@ function mergeConfig(
     // 合并平台配置
     if (config.platform) {
       merged.platform = { ...merged.platform, ...config.platform }
+    }
+
+    // 合并通知配置
+    if (config.notifications) {
+      merged.notifications = { ...merged.notifications }
     }
 
     // 合并审查配置

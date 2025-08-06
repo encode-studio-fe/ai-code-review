@@ -1,9 +1,11 @@
 import { consola } from 'consola'
 import type { AiProvider } from '../ai/types'
 import type { AiReviewerConfig } from '../config/config'
+import type { NotificationManager } from '../notifications/types'
 import type { Platform } from '../platforms/types'
 import { createAiProvider } from '../ai/provider'
 import { validateConfig } from '../config/config'
+import { createNotificationManager } from '../notifications/index'
 import { createPlatform } from '../platforms/index'
 import { TempFileManager } from '../utils/file'
 import { OutputFormatter } from '../utils/formatter'
@@ -47,6 +49,7 @@ export class CodeReviewer {
   private config: AiReviewerConfig
   private aiProvider: AiProvider
   private platform: Platform
+  private notificationManager: NotificationManager
   private fileManager: TempFileManager
 
   constructor(options: CodeReviewOptions) {
@@ -70,6 +73,9 @@ export class CodeReviewer {
       path: options.path,
       commitSha: options.commitSha,
     })
+
+    // 初始化通知管理器
+    this.notificationManager = createNotificationManager(this.config.notifications)
 
     // 初始化文件管理器
     this.fileManager = new TempFileManager()
@@ -135,6 +141,17 @@ export class CodeReviewer {
           const summaryFilePath = await this.fileManager.saveSummary(summary)
           consola.info(`审查总结已保存到临时文件：${summaryFilePath}`)
         }
+      }
+
+      consola.info('开始发送审查结果通知...')
+      await this.notificationManager.sendBatchReviewNotifications(results, this.platform)
+
+      // 发送总结通知
+      if (summary) {
+        await this.notificationManager.sendSummaryNotification(
+          summary,
+          this.platform,
+        )
       }
 
       consola.success('代码审查完成')

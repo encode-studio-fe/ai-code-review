@@ -1,71 +1,30 @@
+// test pull request
+
 import path from 'node:path'
-import fs from 'fs-extra'
-import _ from 'lodash'
-import glob from 'glob'
-import ejs from 'ejs'
-import {
-  ESLINT_IGNORE_PATTERN,
-  MARKDOWN_LINT_IGNORE_PATTERN,
-  STYLELINT_FILE_EXT,
-  STYLELINT_IGNORE_PATTERN,
-} from './constants'
+import fs from 'node:fs'
 
-/**
- * vscode 配置合并
- * @param filepath
- * @param content
- */
-function mergeVSCodeConfig(filepath, content) {
-  // 不需要 merge
-  if (!fs.existsSync(filepath))
-    return content
-
-  try {
-    const targetData = fs.readJSONSync(filepath)
-    const sourceData = JSON.parse(content)
-    return JSON.stringify(
-      _.mergeWith(targetData, sourceData, (target, source) => {
-        if (Array.isArray(target) && Array.isArray(source)) {
-          return [...new Set(source.concat(target))]
-        }
-      }),
-      null,
-      2,
-    )
-  }
-  catch (e) {
-    return ''
-  }
+export async function outputFile(filepath, data, options) {
+  await fs.promises.mkdir(path.dirname(filepath), { recursive: true })
+  await fs.promises.writeFile(filepath, data, options)
 }
 
-/**
- * 实例化模板
- * @param cwd
- * @param data
- * @param vscode
- */
-export default (cwd, data, vscode) => {
-  const templatePath = path.resolve(__dirname, '../config')
-  const templates = glob.sync(`${vscode ? '_vscode' : '**'}/*.ejs`, { cwd: templatePath })
-  for (const name of templates) {
-    const filepath = path.resolve(cwd, name.replace(/\.ejs$/, '').replace(/^_/, '.'))
-    let content = ejs.render(fs.readFileSync(path.resolve(templatePath, name), 'utf8'), {
-      eslintIgnores: ESLINT_IGNORE_PATTERN,
-      stylelintExt: STYLELINT_FILE_EXT,
-      stylelintIgnores: STYLELINT_IGNORE_PATTERN,
-      markdownLintIgnores: MARKDOWN_LINT_IGNORE_PATTERN,
-      ...data,
-    })
+export function copyDirSync(srcDir, destDir) {
+  if (!fs.existsSync(srcDir))
+    return
 
-    // 合并 vscode config
-    if (name.startsWith('_vscode')) {
-      content = mergeVSCodeConfig(filepath, content)
-    }
-
-    // 跳过空文件
-    if (!content.trim())
+  fs.mkdirSync(destDir, { recursive: true })
+  for (const file of fs.readdirSync(srcDir)) {
+    const srcFile = path.resolve(srcDir, file)
+    if (srcFile === destDir) {
       continue
-
-    fs.outputFileSync(filepath, content, 'utf8')
+    }
+    const destFile = path.resolve(destDir, file)
+    const stat = fs.statSync(srcFile)
+    if (stat.isDirectory()) {
+      copyDirSync(srcFile, destFile)
+    }
+    else {
+      fs.copyFileSync(srcFile, destFile)
+    }
   }
 }
