@@ -3,7 +3,7 @@
  * 生成 AI 代码审查配置文件
  *
  * 用法:
- * node generate-config.js [--output <配置文件路径>]
+ * node generate-config.cjs [--output <配置文件路径>]
  */
 
 const fs = require('node:fs')
@@ -35,7 +35,7 @@ function buildConfig() {
       model: process.env.AI_REVIEWER_MODEL || 'deepseek/deepseek-chat-v3-0324:free',
       apiKey: process.env.AI_REVIEWER_OPENAI_KEY || '',
       baseUrl: process.env.AI_REVIEWER_BASE_URL || 'https://openrouter.ai',
-      temperature: Number.parseFloat(process.env.AI_REVIEWER_TEMPERATURE || '0.1'),
+      temperature: Number.parseFloat(process.env.AI_REVIEWER_TEMPERATURE || 0.1),
       maxTokens: Number.parseInt(process.env.AI_REVIEWER_MAX_TOKENS || '4000', 10),
     },
     platform: {

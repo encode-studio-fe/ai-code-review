@@ -46,7 +46,7 @@ ai:
   model: 'deepseek/deepseek-chat-v3-0324:free'
   apiKey: '${AI_REVIEWER_OPENAI_KEY}'
   baseUrl: 'https://openrouter.ai'
-  temperature: '0.1'
+  temperature: 0.1
   maxTokens: '4000'
 
 platform:
