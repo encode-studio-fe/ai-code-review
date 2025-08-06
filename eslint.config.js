@@ -13,6 +13,8 @@ export default antfu(
       // 禁用超线性回溯检查
       'regexp/no-super-linear-backtracking': 'off',
 
+      'ts/no-empty-object-type': 'off',
+
       // 允许直接使用process而不是require("process")
       'node/prefer-global/process': 'off',
 
